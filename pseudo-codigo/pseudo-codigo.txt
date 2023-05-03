@@ -1,0 +1,94 @@
+
+Caso de uso 1: Guardar datos del cliente
+//los datos del cliente los recibimos externamente del usuario de la plataforma.
+Class ControlCliente{
+    repositorioClientes
+    crearRegistro(cliente: Cliente){
+        repositorioClientes.agregar(cliente)
+    }
+}
+
+class RepositorioClientes(){
+    listaClientes
+    //valida que los datos enviados sean coherentes con el esquema del cliente 
+    //En caso de que surja un error en el proceso se propaga una excepcion
+    agregar(cliente:Cliente){
+    si datosValidos(cliente) entonces
+        sí no existeCliente(cliente.obtenerId()) entonces
+            repositorioClientes.agregar(cliente)
+        siNo
+            propagar excepcion
+        fin si
+    siNo 
+        propagar excepcion
+    fin si
+    }
+     //valida si existe un cliente ya registrado con el mismo id
+    // retorna true si existe, de lo contrario false
+    existeCliente(id entero){
+        para i->0 hasta listaClientes.tamaño() con paso 1 hacer:
+            si id = listaClientes[i].obtenerId() entonces:
+                retornar true
+            fin si
+        fin para
+        retornar false
+    }
+}
+
+
+Caso de uso 2: reservar/comprarViajes
+//recibo los datos de la solicitud con la estructura planteada para la base de datos con las referencias al cliente y el viaje
+Class ControlSolicitud{
+    repositorioSolicitudes
+    crearRegistro(solicitud: Solicitud){
+        repositorioSolicitudes.agregar(solicitud)
+    }
+}
+
+
+
+class RepositorioSolicitud(){
+    listaSolicitudes
+    //valida que los datos enviados sean coherentes con el esquema de la solicitud 
+    //En caso de que surja un error en el proceso se propaga una excepcion
+    agregar(solicitud: Solicitud){
+    si datosValidos(Solicitud) entonces
+        sí no existeSolicitud(solicitud.obtenerId()) entonces
+            listaSolicitudes.agregar(cliente)
+        siNo
+            propagar excepcion
+        fin si
+    siNo 
+        propagar excepcion
+    fin si
+    }
+    //valida si existe una solicitud ya registrada con el mismo id
+    // retorna true si existe, de lo contrario false
+    existeCliente(id entero){
+        para i->0 hasta listaSolicitudes.tamaño() con paso 1 hacer:
+            si id = listaSolicitudes[i].obtenerId() entonces:
+                retornar true
+            fin si
+        fin para
+        retornar false
+    }
+}
+
+caso uso 3: listar viajes
+
+Class ControlViajes{
+    repositorioViajes
+    listar(){
+        repuesta <- repositorioViajes.listar()
+        retornar respuesta
+    }
+}
+
+Class repositorioViajes implementa ICRUD{
+    listaClientes
+
+    listar(){
+        copia <- listaClientes
+        retornar copia
+    }
+}
