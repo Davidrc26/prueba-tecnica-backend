@@ -18,7 +18,7 @@ WHERE
 
 #Personas que han tomado los vuelos y han hecho el pago en efectivo
 
-SELECT 
+    SELECT 
     nombre
 FROM
     cliente c
@@ -26,20 +26,13 @@ FROM
     solicitud s
 WHERE
     c.idCliente = s.idCliente
+        AND nombreMetodoPago = 'efectivo'
         AND s.idSolicitud IN (SELECT 
             idSolicitud
         FROM
             checkIn
         WHERE
-            estado = TRUE
-                AND idMetodoPago IN (SELECT 
-                    mp.idMetodoPago
-                FROM
-                    metodoPago mp,
-                    checkIn ck
-                WHERE
-                    mp.idMetodoPago = ck.idMetodoPago
-                        AND mp.nombre = 'efectivo'));
+            estado = TRUE);
                         
 
 
@@ -71,12 +64,7 @@ WHERE
             checkIn ck
         WHERE
             s.idSolicitud = ck.idSolicitud
-                AND ck.idMetodoPago IN (SELECT 
-                    idMetodoPago
-                FROM
-                    metodoPago
-                WHERE
-                    nombre = 'tarjeta'));
+                AND s.nombreMetodoPago = "tarjeta");
                     
                     
 #Listar los viajes activos y cancelados
